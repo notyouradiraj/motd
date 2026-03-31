@@ -1,11 +1,11 @@
 #!/bin/bash
 # ==========================================
-# RTXCloud Premium MOTD Installer (v2 Ultra)
+# Atyro Cloud Premium MOTD Installer (v2 Ultra)
 # ==========================================
 
 set -e
 
-echo "🔧 Installing RTXCloud Premium MOTD..."
+echo "🔧 Installing Atyro Cloud Premium MOTD..."
 
 # ================================
 # Disable ALL default MOTD scripts
@@ -16,7 +16,7 @@ sudo chmod -x /etc/update-motd.d/* 2>/dev/null || true
 # ==========================================
 # Create Premium MOTD Script
 # ==========================================
-cat << 'EOF' > /etc/update-motd.d/00-rtxcloud
+cat << 'EOF' > /etc/update-motd.d/00-atyrocloud
 #!/bin/bash
 
 # ===== Colors =====
@@ -47,20 +47,20 @@ PROCS=$(ps -e --no-headers | wc -l)
 
 echo ""
 
-# ===== RTXCloud Logo =====
+# ===== Atyro Cloud Logo =====
 echo -e "${MAGENTA}"
 cat << "LOGO"
-██████╗ ████████╗██╗  ██╗ ██████╗██╗      ██████╗ ██╗   ██╗██████╗ 
-██╔══██╗╚══██╔══╝╚██╗██╔╝██╔════╝██║     ██╔═══██╗██║   ██║██╔══██╗
-██████╔╝   ██║    ╚███╔╝ ██║     ██║     ██║   ██║██║   ██║██║  ██║
-██╔══██╗   ██║    ██╔██╗ ██║     ██║     ██║   ██║██║   ██║██║  ██║
-██║  ██║   ██║   ██╔╝ ██╗╚██████╗███████╗╚██████╔╝╚██████╔╝██████╔╝
-╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝╚══════╝ ╚═════╝  ╚═════╝ ╚═════╝
+ █████╗ ████████╗██╗   ██╗██████╗  ██████╗      ██████╗██╗      ██████╗ ██╗   ██╗██████╗ 
+██╔══██╗╚══██╔══╝╚██╗ ██╔╝██╔══██╗██╔═══██╗    ██╔════╝██║     ██╔═══██╗██║   ██║██╔══██╗
+███████║   ██║    ╚████╔╝ ██████╔╝██║   ██║    ██║     ██║     ██║   ██║██║   ██║██║  ██║
+██╔══██║   ██║     ╚██╔╝  ██╔══██╗██║   ██║    ██║     ██║     ██║   ██║██║   ██║██║  ██║
+██║  ██║   ██║      ██║   ██║  ██║╚██████╔╝    ╚██████╗███████╗╚██████╔╝╚██████╔╝██████╔╝
+╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚═╝  ╚═╝ ╚═════╝      ╚═════╝╚══════╝ ╚═════╝  ╚═════╝ ╚═════╝
 LOGO
 echo -e "${RESET}"
 
 # ===== Header =====
-echo -e "${GREEN}🚀 Welcome to RTXCloud Datacenter${RESET}"
+echo -e "${GREEN}🚀 Welcome to Atyro Cloud Datacenter${RESET}"
 echo -e "${BLUE}High Performance • Secure • Reliable Infrastructure${RESET}"
 echo -e "${GRAY}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
 
@@ -80,14 +80,14 @@ printf "${CYAN}%-18s${RESET} %s\n" "IP Address:" "$IP"
 echo -e "${GRAY}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
 
 # ===== Footer =====
-echo -e "${GREEN}Support:${RESET}  rtxcloud69@gmail.com"
+echo -e "${GREEN}Support:${RESET}  support@atyrocloud.com"
 echo -e "${GREEN}Discord:${RESET}  https://discord.gg/G3rFVwtw35"
-echo -e "${GREEN}Website:${RESET}  https://www.rtxcloud.xyz"
+echo -e "${GREEN}Website:${RESET}  https://atyro.cloud"
 echo -e "${MAGENTA}Quality Wise — No Compromise 💎${RESET}"
 echo ""
 EOF
 
-chmod +x /etc/update-motd.d/00-rtxcloud
+chmod +x /etc/update-motd.d/00-atyrocloud
 
-echo "✅ RTXCloud Premium MOTD Installed Successfully!"
+echo "✅ Atyro Cloud Premium MOTD Installed Successfully!"
 echo "➡ Logout or reconnect SSH to see the new MOTD."
