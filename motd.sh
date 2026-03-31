@@ -1,6 +1,7 @@
 #!/bin/bash
 # ==========================================
-# Atyro Cloud Premium MOTD Installer (v2 Ultra)
+# Atyro Cloud Premium MOTD Installer (v3 PRO)
+# FULL CLEAN + ONLY CUSTOM MOTD
 # ==========================================
 
 set -e
@@ -8,14 +9,45 @@ set -e
 echo "🔧 Installing Atyro Cloud Premium MOTD..."
 
 # ================================
-# Disable ALL default MOTD scripts
+# REMOVE ALL OLD MOTD SYSTEM
 # ================================
-echo "⚙ Disabling old MOTD scripts..."
-sudo chmod -x /etc/update-motd.d/* 2>/dev/null || true
+echo "🧹 Removing old MOTD completely..."
 
-# ==========================================
-# Create Premium MOTD Script
-# ==========================================
+# Disable all default MOTD scripts
+chmod -x /etc/update-motd.d/* 2>/dev/null || true
+
+# Remove default files
+rm -f /etc/motd
+rm -f /var/run/motd
+rm -f /run/motd.dynamic
+
+# Disable motd-news
+if [ -f /etc/default/motd-news ]; then
+    sed -i 's/ENABLED=1/ENABLED=0/g' /etc/default/motd-news
+fi
+
+# ================================
+# FORCE ONLY OUR MOTD (PAM FIX)
+# ================================
+echo "⚙ Configuring PAM..."
+
+# Backup PAM files (safe)
+cp /etc/pam.d/sshd /etc/pam.d/sshd.bak 2>/dev/null || true
+cp /etc/pam.d/login /etc/pam.d/login.bak 2>/dev/null || true
+
+# Remove old motd lines
+sed -i '/pam_motd.so/d' /etc/pam.d/sshd
+sed -i '/pam_motd.so/d' /etc/pam.d/login
+
+# Add ONLY our MOTD
+echo "session optional pam_exec.so stdout /etc/update-motd.d/00-atyrocloud" >> /etc/pam.d/sshd
+echo "session optional pam_exec.so stdout /etc/update-motd.d/00-atyrocloud" >> /etc/pam.d/login
+
+# ================================
+# CREATE PREMIUM MOTD SCRIPT
+# ================================
+echo "✨ Creating Atyro Cloud MOTD..."
+
 cat << 'EOF' > /etc/update-motd.d/00-atyrocloud
 #!/bin/bash
 
@@ -28,12 +60,12 @@ YELLOW="\e[38;5;220m"
 GRAY="\e[38;5;245m"
 RESET="\e[0m"
 
-# ===== Fast System Info =====
+# ===== System Info (Optimized) =====
 HOSTNAME=$(hostname)
 OS=$(grep PRETTY_NAME /etc/os-release | cut -d= -f2 | tr -d '"')
 KERNEL=$(uname -r)
 UPTIME=$(uptime -p | sed 's/up //')
-LOAD=$(awk '{print $1}' /proc/loadavg)
+CPU=$(top -bn1 | grep "Cpu(s)" | awk '{print 100 - $8"%"}')
 
 MEM_TOTAL=$(free -m | awk '/Mem:/ {print $2}')
 MEM_USED=$(free -m | awk '/Mem:/ {print $3}')
@@ -47,7 +79,7 @@ PROCS=$(ps -e --no-headers | wc -l)
 
 echo ""
 
-# ===== Atyro Cloud Logo =====
+# ===== LOGO =====
 echo -e "${MAGENTA}"
 cat << "LOGO"
  █████╗ ████████╗██╗   ██╗██████╗  ██████╗      ██████╗██╗      ██████╗ ██╗   ██╗██████╗ 
@@ -59,35 +91,42 @@ cat << "LOGO"
 LOGO
 echo -e "${RESET}"
 
-# ===== Header =====
+# ===== HEADER =====
 echo -e "${GREEN}🚀 Welcome to Atyro Cloud Datacenter${RESET}"
 echo -e "${BLUE}High Performance • Secure • Reliable Infrastructure${RESET}"
 echo -e "${GRAY}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
 
-# ===== System Stats =====
+# ===== STATS =====
 printf "${CYAN}%-18s${RESET} %s\n" "Hostname:" "$HOSTNAME"
-printf "${CYAN}%-18s${RESET} %s\n" "Operating System:" "$OS"
+printf "${CYAN}%-18s${RESET} %s\n" "OS:" "$OS"
 printf "${CYAN}%-18s${RESET} %s\n" "Kernel:" "$KERNEL"
 printf "${CYAN}%-18s${RESET} %s\n" "Uptime:" "$UPTIME"
-printf "${CYAN}%-18s${RESET} %s\n" "CPU Load:" "$LOAD"
-printf "${CYAN}%-18s${RESET} %sMB / %sMB (${YELLOW}%s%%${RESET})\n" \
-"Memory:" "$MEM_USED" "$MEM_TOTAL" "$MEM_PERC"
-printf "${CYAN}%-18s${RESET} %s\n" "Disk Usage:" "$DISK"
+printf "${CYAN}%-18s${RESET} %s\n" "CPU Usage:" "$CPU"
+printf "${CYAN}%-18s${RESET} %sMB / %sMB (${YELLOW}%s%%${RESET})\n" "Memory:" "$MEM_USED" "$MEM_TOTAL" "$MEM_PERC"
+printf "${CYAN}%-18s${RESET} %s\n" "Disk:" "$DISK"
 printf "${CYAN}%-18s${RESET} %s\n" "Processes:" "$PROCS"
-printf "${CYAN}%-18s${RESET} %s\n" "Users Online:" "$USERS"
-printf "${CYAN}%-18s${RESET} %s\n" "IP Address:" "$IP"
+printf "${CYAN}%-18s${RESET} %s\n" "Users:" "$USERS"
+printf "${CYAN}%-18s${RESET} %s\n" "IP:" "$IP"
 
 echo -e "${GRAY}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
 
-# ===== Footer =====
-echo -e "${GREEN}Support:${RESET}  support@atyrocloud.com"
+# ===== FOOTER =====
+echo -e "${GREEN}Support:${RESET}  support@atyro.cloud"
 echo -e "${GREEN}Discord:${RESET}  https://discord.gg/G3rFVwtw35"
 echo -e "${GREEN}Website:${RESET}  https://atyro.cloud"
-echo -e "${MAGENTA}Quality Wise — No Compromise 💎${RESET}"
+echo -e "${MAGENTA}Atyro Cloud — Premium Hosting Experience 💎${RESET}"
 echo ""
 EOF
 
 chmod +x /etc/update-motd.d/00-atyrocloud
 
-echo "✅ Atyro Cloud Premium MOTD Installed Successfully!"
-echo "➡ Logout or reconnect SSH to see the new MOTD."
+# ================================
+# RESTART SERVICES
+# ================================
+systemctl restart ssh 2>/dev/null || true
+
+echo ""
+echo "✅ Atyro Cloud MOTD Installed (ONLY MODE ENABLED)"
+echo "🚫 All default MOTD fully removed"
+echo "🔥 Only your custom MOTD will show"
+echo "➡ Reconnect SSH to see changes"
