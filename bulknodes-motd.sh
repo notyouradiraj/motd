@@ -116,7 +116,7 @@ echo -e "${ORANGE}Bulk Nodes — Premium Hosting Experience 💎${RESET}"
 echo ""
 EOF
 
-chmod +x /etc/update-motd.d/00-bulknodes
+chmod +x /etc/update-motd.d/00-matrixhost
 
 # ================================
 # RESTART SERVICES
