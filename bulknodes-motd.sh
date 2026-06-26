@@ -1,12 +1,12 @@
 #!/bin/bash
 # ==========================================
-# Matrix Host Premium MOTD Installer (v3 PRO)
+# BulkNodes Premium MOTD Installer (v3 PRO)
 # FULL CLEAN + ONLY CUSTOM MOTD
 # ==========================================
 
 set -e
 
-echo "🔧 Installing Matrix Host Premium MOTD..."
+echo "🔧 Installing BulkNodes Premium MOTD..."
 
 # ================================
 # REMOVE ALL OLD MOTD SYSTEM
@@ -46,7 +46,7 @@ echo "session optional pam_exec.so stdout /etc/update-motd.d/00-matrixhost" >> /
 # ================================
 # CREATE PREMIUM MOTD SCRIPT
 # ================================
-echo "✨ Creating Matrix Host MOTD..."
+echo "✨ Creating BulkNodes MOTD..."
 
 cat << 'EOF' > /etc/update-motd.d/00-matrixhost
 #!/bin/bash
@@ -81,17 +81,17 @@ echo ""
 # ===== LOGO =====
 echo -e "${ORANGE}"
 cat << "LOGO"
-███╗   ███╗ █████╗ ████████╗██████╗ ██╗██╗  ██╗    ██╗  ██╗ ██████╗ ███████╗████████╗
-████╗ ████║██╔══██╗╚══██╔══╝██╔══██╗██║╚██╗██╔╝    ██║  ██║██╔═══██╗██╔════╝╚══██╔══╝
-██╔████╔██║███████║   ██║   ██████╔╝██║ ╚███╔╝     ███████║██║   ██║███████╗   ██║   
-██║╚██╔╝██║██╔══██║   ██║   ██╔══██╗██║ ██╔██╗     ██╔══██║██║   ██║╚════██║   ██║   
-██║ ╚═╝ ██║██║  ██║   ██║   ██║  ██║██║██╔╝ ██╗    ██║  ██║╚██████╔╝███████║   ██║   
-╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝    ╚═╝  ╚═╝ ╚═════╝ ╚══════╝   ╚═╝   
+██████╗ ██╗   ██╗██╗     ██╗  ██╗    ███╗   ██╗ ██████╗ ██████╗ ███████╗███████╗
+██╔══██╗██║   ██║██║     ██║ ██╔╝    ████╗  ██║██╔═══██╗██╔══██╗██╔════╝██╔════╝
+██████╔╝██║   ██║██║     █████╔╝     ██╔██╗ ██║██║   ██║██║  ██║█████╗  ███████╗
+██╔══██╗██║   ██║██║     ██╔═██╗     ██║╚██╗██║██║   ██║██║  ██║██╔══╝  ╚════██║
+██████╔╝╚██████╔╝███████╗██║  ██╗    ██║ ╚████║╚██████╔╝██████╔╝███████╗███████║
+╚═════╝  ╚═════╝ ╚══════╝╚═╝  ╚═╝    ╚═╝  ╚═══╝ ╚═════╝ ╚═════╝ ╚══════╝╚══════╝ 
 LOGO
 echo -e "${RESET}"
 
 # ===== HEADER =====
-echo -e "${GREEN}🚀 Welcome to Matrix Host Datacenter${RESET}"
+echo -e "${GREEN}🚀 Welcome to BulkNodes Datacenter${RESET}"
 echo -e "${CYAN}High Performance • Secure • Reliable Infrastructure${RESET}"
 echo -e "${GRAY}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
 
@@ -110,13 +110,13 @@ printf "${CYAN}%-18s${RESET} %s\n" "IP:" "$IP"
 echo -e "${GRAY}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
 
 # ===== FOOTER =====
-echo -e "${GREEN}Support:${RESET}  support@matrixhost.in"
-echo -e "${GREEN}Website:${RESET}  https://matrixhost.in"
-echo -e "${ORANGE}Matrix Host — Premium Hosting Experience 💎${RESET}"
+echo -e "${GREEN}Support:${RESET}  noreply@bulknodes.xyz"
+echo -e "${GREEN}Website:${RESET}  https://www.bulknodes.xyz"
+echo -e "${ORANGE}Bulk Nodes — Premium Hosting Experience 💎${RESET}"
 echo ""
 EOF
 
-chmod +x /etc/update-motd.d/00-matrixhost
+chmod +x /etc/update-motd.d/00-bulknodes
 
 # ================================
 # RESTART SERVICES
@@ -124,7 +124,7 @@ chmod +x /etc/update-motd.d/00-matrixhost
 systemctl restart ssh 2>/dev/null || true
 
 echo ""
-echo "✅ Matrix Host MOTD Installed (ONLY MODE ENABLED)"
+echo "✅ BulkNodes MOTD Installed (ONLY MODE ENABLED)"
 echo "🚫 All default MOTD fully removed"
 echo "🔥 Only your custom MOTD will show"
 echo "➡ Reconnect SSH to see changes"
